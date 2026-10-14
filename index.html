@@ -112,6 +112,13 @@
           <figcaption>Each state's share of Australia's protected land (teal) and of its population (purple). The shares for protected land add up to slightly less than 100% because Jervis Bay and the external territories are left out.</figcaption>
           <p class="source">Sources: CAPAD 2024 (protected land, June 2024); Australian Bureau of Statistics, National, state and territory population, March 2026 (released 17 September 2026).</p>
         </figure>
+        <p class="measure follow">Another way to see the same gap is to count how many people live for every square kilometre of protected land. In the ACT it is about 370. In Victoria it is about 180, and in New South Wales about 100. In the Northern Territory it is fewer than one.</p>
+        <figure>
+          <div id="tilegrid" class="chart" role="img" aria-label="Tile map with one tile per state or territory, coloured by people for every square kilometre of protected land. ACT 371, Victoria 178, New South Wales 104, Queensland 36, Tasmania 20, South Australia 6.4, Western Australia 3.9 and the Northern Territory 0.8."></div>
+          <figcaption>Each tile is a state or territory, placed roughly where it sits on the map, so small places like the ACT get as much room as large ones. The number is the population divided by the area of protected land in square kilometres. A higher number means more people share each square kilometre of protected land.</figcaption>
+          <p class="source">Sources: CAPAD 2024 (protected land, June 2024); Australian Bureau of Statistics, National, state and territory population (March 2026).</p>
+        </figure>
+
       </div>
     </section>
 
@@ -151,6 +158,25 @@
       </div>
     </section>
 
+    <section id="visits" aria-labelledby="visits-title">
+      <div class="wrap">
+        <h2 id="visits-title">Who actually goes?</h2>
+        <p class="measure">Counting visitors is harder than mapping parks. We found park-by-park counts from only three sources: the NSW National Parks and Wildlife Service, Tasmania's Parks and Wildlife Service and Parks Australia. Some states publish only state-wide totals, and for others we could not find any. Each agency counts in its own way, so their numbers should not be ranked against each other.</p>
+        <p class="measure">New South Wales counted 65.6 million visits to its parks in 2024/25, the highest of any survey since 2008. Blue Mountains alone had 7.8 million, about 12% of the total. Several of the busiest parks are inside Sydney, such as Lane Cove, Sydney Harbour and Garigal.</p>
+        <figure>
+          <div id="nswtop" class="chart" role="img" aria-label="Chart of the 20 most visited NSW parks in 2024/25. Blue Mountains is first with 7.83 million visits, then Royal with 4.91 million and Ku-ring-gai Chase with 4.30 million. The twentieth, Georges River, has 0.96 million."></div>
+          <figcaption>The 20 most visited parks managed by the NSW National Parks and Wildlife Service in 2024/25. Filled dots are national parks. Hollow dots are other kinds of park, such as state conservation areas and regional parks. Worimi Conservation Lands combines a national park with other park types.</figcaption>
+          <p class="source">Source: NSW National Parks and Wildlife Service, park visitor survey (visits to parks, 2024/25). National park labels use CAPAD 2024.</p>
+        </figure>
+        <p class="measure follow">Visits fell in 2020, the COVID-19 year, then climbed past the old peak. Children are a smaller share of visitors than before: 25% of visits in 2018 and 19% in 2024/25.</p>
+        <figure>
+          <div id="nswtrend" class="chart" role="img" aria-label="Line chart of total visits to NSW parks. Visits were 37.9 million in 2008, 60.2 million in 2018, fell to 50.1 million in 2020, and reached 65.6 million in 2024/25."></div>
+          <figcaption>Total visits to parks managed by the NSW National Parks and Wildlife Service in each survey year. The surveys cover every second year, and the latest covers 2024/25.</figcaption>
+          <p class="source">Source: NSW National Parks and Wildlife Service, park visitor survey (park visitation by year, 2008 to 2024/25).</p>
+        </figure>
+      </div>
+    </section>
+
     <section id="thirty" aria-labelledby="thirty-title">
       <div class="wrap">
         <h2 id="thirty-title">The road to 30%</h2>
@@ -183,10 +209,13 @@
       { target: "#waffle",     spec: "specs/waffle.json",       fit: fitWaffle },
       { target: "#choropleth", spec: "specs/choropleth.json" },
       { target: "#butterfly",  spec: "specs/butterfly.json",    fit: fitButterfly },
+      { target: "#tilegrid",   spec: "specs/tilegrid.json",     fit: fitTilegrid },
       { target: "#parksmap",   spec: "specs/parks_map.json",    fit: fitParksMap },
       { target: "#jitter",     spec: "specs/parks_jitter.json", fit: fitJitter,   shrink: shrinkWidth },
       { target: "#lollipop",   spec: "specs/bio_lollipop.json", fit: fitLollipop, shrink: shrinkWidth },
       { target: "#heatmap",    spec: "specs/bio_heatmap.json",  fit: fitHeatmap,  shrink: shrinkWidth },
+      { target: "#nswtop",     spec: "specs/nsw_top20.json",    fit: fitNswTop,   shrink: shrinkWidth },
+      { target: "#nswtrend",   spec: "specs/nsw_trend.json",    fit: fitNswTrend },
       { target: "#dotplot",    spec: "specs/dotplot.json",      fit: fitDotplot,  shrink: shrinkWidth }
     ];
 
@@ -211,6 +240,39 @@
         spec.transform[0].calculate = "datum.code";
         [spec.hconcat[0], spec.hconcat[2]].forEach(function (panel) {
           panel.layer.forEach(function (layer) { layer.encoding.x.scale.domain = [0, 75]; });
+        });
+      }
+    }
+
+    // The tile grid keeps its tiles square; its key moves underneath on narrower screens.
+    function fitTilegrid(spec, el) {
+      var keyOnRight = el.clientWidth >= 700;
+      var step = keyOnRight ? Math.min(110, Math.floor((el.clientWidth - 280) / 4)) : Math.min(110, Math.floor((el.clientWidth - 8) / 4));
+      spec.width = { step: step };
+      spec.height = { step: step };
+      var legend = spec.layer[0].encoding.color.legend;
+      legend.orient = keyOnRight ? "right" : "bottom";
+      if (!keyOnRight) { legend.title = ["People for every square", "kilometre of protected land"]; legend.direction = "vertical"; }
+      if (step < 90) { spec.layer[1].mark.fontSize = 13; spec.layer[1].mark.lineHeight = 16; }
+    }
+
+    // The NSW top-20 chart: park names on the left, shorter on small screens.
+    function fitNswTop(spec, el) {
+      var narrow = el.clientWidth < NARROW;
+      spec.width = Math.max(150, Math.min(560, el.clientWidth - (narrow ? 150 : 210) - 70));
+      if (narrow) {
+        spec.encoding.y.axis.labelLimit = 135; spec.encoding.y.axis.labelFontSize = 12;
+        spec.layer[1].encoding.fill.legend.direction = "vertical";
+      }
+    }
+
+    // The NSW trend chart: on small screens it is shorter, labels only the key years, and shows every second year.
+    function fitNswTrend(spec, el) {
+      if (el.clientWidth < NARROW) {
+        spec.height = 260;
+        spec.encoding.x.axis.values = ["2008", "2012", "2016", "2020", "2024/25"]; spec.encoding.x.axis.labelFontSize = 12;
+        spec.layer.forEach(function (l) {
+          if (l.description === "Value labels") { l.transform = [{ filter: "indexof(['2008','2018','2020','2024/25'], datum.year) >= 0" }]; }
         });
       }
     }
