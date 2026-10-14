@@ -44,7 +44,7 @@
     h1 { font-size: clamp(2.8rem, 8vw, 5.2rem); max-width: 14ch; }
     h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); }
     p { margin: 0 0 1.1rem; }
-    .follow { margin-top: 2.6rem; }
+    
 
     .masthead { padding: clamp(3rem, 9vw, 6rem) 0 clamp(2rem, 5vw, 3.5rem); }
     .dek { font-family: var(--serif); font-weight: 500; font-size: clamp(1.3rem, 3vw, 1.8rem); line-height: 1.3; margin: 1.1rem 0 1.6rem; max-width: 30ch; color: var(--protected); }
@@ -63,6 +63,24 @@
     footer { border-top: 1px solid var(--rule); padding: 2.5rem 0 4rem; color: var(--muted); font-size: 0.95rem; line-height: 1.55; }
     footer p { max-width: 75ch; margin-bottom: 0.9rem; }
 
+
+    /* Story rows: text on the left, chart on the right (wide screens); stacked on smaller screens */
+    .row { margin-top: 2.4rem; }
+    .row .text p { margin: 0 0 1.1rem; max-width: 62ch; }
+    .row figure { margin: 1.6rem 0 0; }
+    .row.single .text p { max-width: 62ch; }
+    @media (min-width: 1180px) {
+      .wrap { max-width: 1280px; }
+      .row { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 8fr); column-gap: 3.5rem; align-items: start; }
+      .row .text { position: sticky; top: 2rem; }
+      .row figure { margin: 0.35rem 0 0; }
+      .row.single { display: block; }
+      .row.single .text { position: static; }
+      h2 { max-width: 24ch; }
+    }
+    .vega-bindings { font-size: 0.95rem; margin: 0.4rem 0 0.2rem; color: var(--ink); }
+    .vega-bindings label { display: inline-flex; gap: 0.5rem; align-items: center; font-weight: 600; }
+    .vega-bindings select { font: inherit; padding: 0.25rem 0.5rem; border: 1px solid #9AA8A1; border-radius: 4px; background: #fff; color: var(--ink); }
     a { color: var(--protected); text-underline-offset: 0.15em; }
     a:focus-visible { outline: 3px solid var(--protected); outline-offset: 3px; }
   </style>
@@ -73,134 +91,161 @@
     <div class="wrap">
       <h1>Australia's National Parks</h1>
       <p class="dek">Are we protecting the right places, and who uses them?</p>
-      <p class="lead measure">Australia protects more than a fifth of its land. This page looks at how much of that is national park, where it is, and who lives near it.</p>
+      <p class="lead measure">Australia protects more than a fifth of its land. This page looks at how much of that is national park, where it is, and who lives near it. National parks are one kind of protected land, so we start with the whole picture.</p>
     </div>
   </header>
 
   <main>
-    <section id="how-much" aria-labelledby="how-much-title">
+        <section id="how-much" aria-labelledby="how-much-title">
       <div class="wrap">
         <h2 id="how-much-title">National parks are only part of the protected land</h2>
-        <p class="measure">About 22.6% of Australia's land is protected (June 2024). Only about a quarter of that is national park, which is 5.5% of the whole country. Indigenous Protected Areas, where Aboriginal and Torres Strait Islander people manage their own land for conservation, cover twice as much (11.2%).</p>
-        <figure>
+        <div class="row">
+          <div class="text"><p>About 22.6% of Australia's land is protected (June 2024). Only about a quarter of that is national park, which is 5.5% of the whole country. Indigenous Protected Areas, where Aboriginal and Torres Strait Islander people manage their own land for conservation, cover twice as much (11.2%).</p></div>
+          <figure>
           <div id="waffle" class="chart" role="img" aria-label="Grid of 200 squares, each one half a percent of Australia's land. 5.5% is national park, 11.2% is Indigenous Protected Area, 5.9% is other protected land and 77.4% is not protected."></div>
           <figcaption>Each square is 0.5% of Australia's land. Other protected areas include nature reserves and conservation parks.</figcaption>
         </figure>
+        </div>
       </div>
     </section>
 
-    <section id="states" aria-labelledby="states-title">
+        <section id="states" aria-labelledby="states-title">
       <div class="wrap">
         <h2 id="states-title">Not every state protects the same share</h2>
-        <p class="measure">Tasmania protects 43% of its land and the ACT 56%. New South Wales and Queensland protect less than 11% each. Western Australia and South Australia are the only large states already past 30%, the national goal for 2030. That goal applies to the whole country, so here it is only a yardstick.</p>
-        <figure>
+        <div class="row">
+          <div class="text"><p>Tasmania protects 43% of its land and the ACT 56%. New South Wales and Queensland protect less than 11% each. Western Australia and South Australia are the only large states already past 30%, the national goal for 2030. That goal applies to the whole country, so here it is only a yardstick.</p></div>
+          <figure>
           <div id="choropleth" class="chart" role="img" aria-label="Map of Australia showing the share of each state's land that is protected, from 9% in Queensland to 56% in the ACT."></div>
           <noscript><p class="chart-error">This chart needs JavaScript to display.</p></noscript><figcaption>Protected land at 30 June 2024.</figcaption>
         </figure>
+        </div>
       </div>
     </section>
 
-    <section id="people" aria-labelledby="people-title">
+        <section id="people" aria-labelledby="people-title">
       <div class="wrap">
         <h2 id="people-title">Most protected land is far from most people</h2>
-        <p class="measure">New South Wales and Victoria are home to 57% of Australians but hold only 7% of the country's protected land. Western Australia, the Northern Territory and South Australia hold 82% of it and are home to 19% of the people.</p>
-        <figure>
+        <div class="row">
+          <div class="text"><p>New South Wales and Victoria are home to 57% of Australians but hold only 7% of the country's protected land. Western Australia, the Northern Territory and South Australia hold 82% of it and are home to 19% of the people.</p></div>
+          <figure>
           <div id="butterfly" class="chart" role="img" aria-label="Two bar charts side by side. On the left, each state's share of Australia's protected land: Western Australia 45%, Northern Territory 19%, South Australia 17%, Queensland 9%, New South Wales 5%, Victoria 2%, Tasmania 2%. On the right, each state's share of the population: New South Wales 31%, Victoria 26%, Queensland 21%, Western Australia 11%."></div>
           <figcaption>Protected land is at June 2024 and population at March 2026.</figcaption>
         </figure>
-        <p class="measure follow">Another way to see the same gap is to count how many people live for every square kilometre of protected land. In the ACT it is about 370. In Victoria it is about 180, and in New South Wales about 100. In the Northern Territory it is fewer than one.</p>
-        <figure>
+        </div>
+        <div class="row">
+          <div class="text"><p>Another way to see the same gap is to count how many people live for every square kilometre of protected land. In the ACT it is about 370. In Victoria it is about 180, and in New South Wales about 100. In the Northern Territory it is fewer than one.</p></div>
+          <figure>
           <div id="tilegrid" class="chart" role="img" aria-label="Tile map with one tile per state or territory, coloured by people for every square kilometre of protected land. ACT 371, Victoria 178, New South Wales 104, Queensland 36, Tasmania 20, South Australia 6.4, Western Australia 3.9 and the Northern Territory 0.8."></div>
           <figcaption>Each tile is a state or territory, placed roughly where it sits on the map. The number is people (March 2026) for every square kilometre of protected land (June 2024).</figcaption>
         </figure>
-
+        </div>
       </div>
     </section>
 
-    <section id="parks" aria-labelledby="parks-title">
+        <section id="parks" aria-labelledby="parks-title">
       <div class="wrap">
         <h2 id="parks-title">Most national parks are small, and a few are giants</h2>
-        <p class="measure">Australia has nearly 800 national parks, and 71% of them are in Queensland and New South Wales. The typical park covers about 65 square kilometres. But 87 parks are bigger than 1,000 square kilometres, and the ten biggest hold about a third of all national park area. The giants are in the dry centre and the north. The Munga-Thirri (Simpson Desert) park in South Australia covers 36,000 square kilometres, more than half the size of Tasmania.</p>
-        <figure>
+        <div class="row">
+          <div class="text"><p>Australia has nearly 800 national parks, and 71% of them are in Queensland and New South Wales. The typical park covers about 65 square kilometres. But 87 parks are bigger than 1,000 square kilometres, and the ten biggest hold about a third of all national park area. The giants are in the dry centre and the north. The Munga-Thirri (Simpson Desert) park in South Australia covers 36,000 square kilometres, more than half the size of Tasmania.</p></div>
+          <figure>
           <div id="parksmap" class="chart" role="img" aria-label="Map of Australia with a circle for each national park, sized by area. Many small parks crowd the east coast and the south-west of Western Australia. The largest parks are in the Simpson Desert, Kakadu, Lake Eyre and Karlamilyi."></div>
           <figcaption>Each circle is one national park. Circle area grows more slowly than park size, so small parks stay visible. Four parks on distant islands are not shown.</figcaption>
         </figure>
-        <p class="measure follow">Queensland has the most national parks (317), but the typical one is only about 35 square kilometres. The Northern Territory has just 18, and the typical one is about 1,250 square kilometres. The number of parks partly reflects how each state names its reserves, so it does not measure how much land a state protects.</p>
-        <figure>
+        </div>
+        <div class="row">
+          <div class="text"><p>Queensland has the most national parks (317), but the typical one is only about 35 square kilometres. The Northern Territory has just 18, and the typical one is about 1,250 square kilometres. The number of parks partly reflects how each state names its reserves, so it does not measure how much land a state protects.</p></div>
+          <figure>
           <div id="jitter" class="chart" role="img" aria-label="Chart with one dot for every national park, grouped by state. Queensland and New South Wales have many small parks. The Northern Territory has few, much larger parks. The largest dots are Munga-Thirri in South Australia, Kakadu in the Northern Territory and Karlamilyi in Western Australia."></div>
-          <figcaption>Each dot is one national park, and the dark tick is the typical (median) park in each state. Each step to the right is ten times bigger. The number in brackets is the number of parks.</figcaption>
+          <figcaption>Each dot is one national park, and the dark tick is the typical (median) park in each state. Hover over a dot to highlight its state. Each step to the right is ten times bigger. The number in brackets is the number of parks.</figcaption>
         </figure>
+        </div>
       </div>
     </section>
 
-    <section id="right-land" aria-labelledby="right-land-title">
+        <section id="right-land" aria-labelledby="right-land-title">
       <div class="wrap">
         <h2 id="right-land-title">Is it the right land?</h2>
-        <p class="measure">Australia is divided into 89 natural regions, each with its own landscape and wildlife. Eighty-seven are on land. Twenty-seven of them have less than 10% protected, and together they cover about 40% of the country. At the other end, the west of Tasmania is 86% protected.</p>
-        <figure>
+        <div class="row">
+          <div class="text"><p>Australia is divided into 89 natural regions, each with its own landscape and wildlife. Eighty-seven are on land. Twenty-seven of them have less than 10% protected, and together they cover about 40% of the country. At the other end, the west of Tasmania is 86% protected.</p></div>
+          <figure>
           <div id="lollipop" class="chart" role="img" aria-label="Chart of the 12 least protected and 8 most protected land regions. The least protected, from Sturt Plateau at 0.7% to Finke at 4.6%, are all under 5%. The most protected run from Nullarbor at 54.9% to Tasmanian West at 86.3%."></div>
           <figcaption>The 12 least and 8 most protected of Australia's 87 land regions. The dashed line marks 30%.</figcaption>
         </figure>
-        <p class="measure follow">What matters is not only how much is protected, but what kind. Across the country, 58% of protected land is in category VI, where sustainable use of natural resources can continue, and 23% is in category II, which is national park. In 9 of the 12 least protected regions, national-park land is the biggest part of what is protected, but it is only 1% to 3% of the region.</p>
-        <figure>
+        </div>
+        <div class="row">
+          <div class="text"><p>What matters is not only how much is protected, but what kind. Across the country, 58% of protected land is in category VI, where sustainable use of natural resources can continue, and 23% is in category II, which is national park. In 9 of the 12 least protected regions, national-park land is the biggest part of what is protected, but it is only 1% to 3% of the region.</p></div>
+          <figure>
           <div id="heatmap" class="chart" role="img" aria-label="Grid showing, for 20 regions, the share of land in each protected-area category. In the least protected regions, the only cells above 1% are mostly category II, national park, at 1 to 3 percent. In the most protected regions, category VI, sustainable use, is often largest, reaching 81% in the Central Ranges."></div>
           <figcaption>Share of each region's land in each protected-area category (international IUCN categories, strictest on the left). Shares under 0.5% are left blank.</figcaption>
         </figure>
+        </div>
       </div>
     </section>
 
-    <section id="visits" aria-labelledby="visits-title">
+        <section id="visits" aria-labelledby="visits-title">
       <div class="wrap">
         <h2 id="visits-title">Who actually goes?</h2>
-        <p class="measure">Counting visitors is harder than mapping parks. We found park-by-park counts from only three sources: the NSW National Parks and Wildlife Service, Tasmania's Parks and Wildlife Service and Parks Australia. Some states publish only state-wide totals, and for others we could not find any. Each agency counts in its own way, so their numbers should not be ranked against each other.</p>
-        <figure>
+        <div class="row">
+          <div class="text"><p>Counting visitors is harder than mapping parks. We found park-by-park counts from only three sources: the NSW National Parks and Wildlife Service, Tasmania's Parks and Wildlife Service and Parks Australia. Some states publish only state-wide totals, and for others we could not find any. Each agency counts in its own way, so their numbers should not be ranked against each other.</p></div>
+          <figure>
           <div id="visitsmap" class="chart" role="img" aria-label="Map of the places with published visit counts. Large circles for New South Wales parks cluster around Sydney, small squares mark Tasmanian sites, and two diamonds mark Kakadu and Uluru. A second map zooms in on Greater Sydney, where Royal, Ku-ring-gai Chase and Blue Mountains have the most visits."></div>
-          <figcaption>Circles are New South Wales, squares are Tasmania and diamonds are Parks Australia, because each agency counts in its own way. Compare sizes only within a shape. Tasmanian site locations are approximate, and the island parks are not shown.</figcaption>
+          <div id="visitsinset" class="chart" role="img" aria-label="Zoom map of Greater Sydney showing the busiest NSW parks: Blue Mountains, Royal, Ku-ring-gai Chase, Lane Cove, Sydney Harbour, Brisbane Water and Kamay Botany Bay."></div>
+          <figcaption>Circles are New South Wales, squares are Tasmania and diamonds are Parks Australia, because each agency counts in its own way. Compare sizes only within a shape. Click a shape in the key to focus on one agency. Tasmanian site locations are approximate, and the island parks are not shown.</figcaption>
         </figure>
-
-        <p class="measure">New South Wales counted 65.6 million visits to its parks in 2024/25, the highest of any survey since 2008. Blue Mountains alone had 7.8 million, about 12% of the total. Several of the busiest parks are inside Sydney, such as Lane Cove, Sydney Harbour and Garigal.</p>
-        <figure>
+        </div>
+        <div class="row">
+          <div class="text"><p>New South Wales counted 65.6 million visits to its parks in 2024/25, the highest of any survey since 2008. Blue Mountains alone had 7.8 million, about 12% of the total. Several of the busiest parks are inside Sydney, such as Lane Cove, Sydney Harbour and Garigal.</p></div>
+          <figure>
           <div id="nswtop" class="chart" role="img" aria-label="Chart of the 20 most visited NSW parks in 2024/25. Blue Mountains is first with 7.83 million visits, then Royal with 4.91 million and Ku-ring-gai Chase with 4.30 million. The twentieth, Georges River, has 0.96 million."></div>
           <figcaption>The 20 most visited NSW parks in 2024/25. Hollow dots are other park types, such as state conservation areas.</figcaption>
         </figure>
-        <p class="measure follow">Visits fell in 2020, the COVID-19 year, then climbed past the old peak. Children are a smaller share of visitors than before: 25% of visits in 2018 and 19% in 2024/25.</p>
-        <figure>
+        </div>
+        <div class="row">
+          <div class="text"><p>Visits fell in 2020, the COVID-19 year, then climbed past the old peak. Children are a smaller share of visitors than before: 25% of visits in 2018 and 19% in 2024/25.</p></div>
+          <figure>
           <div id="nswtrend" class="chart" role="img" aria-label="Line chart of total visits to NSW parks. Visits were 37.9 million in 2008, 60.2 million in 2018, fell to 50.1 million in 2020, and reached 65.6 million in 2024/25."></div>
         </figure>
-              <p class="measure follow">Tasmania's Parks and Wildlife Service counts visitors at 14 reference sites. All 12 sites shown here had more visits in 2025-26 than in 2020-21. The total for 13 of the sites rose from 864,000 to 1.2 million. Maria Island grew most, from 33,000 to 88,000 visits, nearly three times as many.</p>
-        <figure>
+        </div>
+        <div class="row">
+          <div class="text"><p>Tasmania's Parks and Wildlife Service counts visitors at 14 reference sites. All 12 sites shown here had more visits in 2025-26 than in 2020-21. The total for 13 of the sites rose from 864,000 to 1.2 million. Maria Island grew most, from 33,000 to 88,000 visits, nearly three times as many.</p></div>
+          <figure>
           <div id="tasslope" class="chart" role="img" aria-label="Slope chart of visits at 12 Tasmanian sites in 2020-21 and 2025-26, in thousands. Freycinet rose from 265 to 291, Cradle Mountain from 170 to 275, and Maria Island, highlighted, from 33 to 88."></div>
           <figcaption>Estimated visits in thousands. Gordon River and Mount Field are left out. The vertical scale is uneven so small sites stay readable. Tasmans Arch closed from mid-April 2026.</figcaption>
         </figure>
-        <p class="measure follow">Because agencies count differently, the last chart compares each place only with its own busiest year. Half of the Tasmanian sites (six of 12) matched or beat their busiest year in 2025-26. Uluru is the exception at Parks Australia: in 2024-25 it had 68% of its 2018-19 visits. The 2022-23 annual report said Uluru was the park most affected by the slow return of international visitors.</p>
-        <figure>
+        </div>
+        <div class="row">
+          <div class="text"><p>Because agencies count differently, the last chart compares each place only with its own busiest year. Half of the Tasmanian sites (six of 12) matched or beat their busiest year in 2025-26. Uluru is the exception at Parks Australia: in 2024-25 it had 68% of its 2018-19 visits. The 2022-23 annual report said Uluru was the park most affected by the slow return of international visitors.</p></div>
+          <figure>
           <div id="recovery" class="chart" role="img" aria-label="Grid of numbers for 17 places and years. Each number is visits as a percentage of the place's busiest year. Maria Island rises from 38 to 100. Uluru rises from 31 in 2020-21 to 68 in 2024-25."></div>
           <figcaption>Each number is visits as a percentage of the place's own busiest year, so 100 is its peak. Uluru's busiest year is 2018-19, which is not shown.</figcaption>
         </figure>
+        </div>
       </div>
     </section>
 
-    <section id="thirty" aria-labelledby="thirty-title">
+        <section id="thirty" aria-labelledby="thirty-title">
       <div class="wrap">
         <h2 id="thirty-title">The road to 30%</h2>
-        <p class="measure">Four places are already past 30%: the ACT, Tasmania, Western Australia and South Australia. Queensland and New South Wales are about 20 points short. Across the whole country, about 25% was protected by July 2026, and roughly 34.3 million more hectares are needed to reach 30%.</p>
-        <figure>
+        <div class="row">
+          <div class="text"><p>Four places are already past 30%: the ACT, Tasmania, Western Australia and South Australia. Queensland and New South Wales are about 20 points short. Across the whole country, about 25% was protected by July 2026, and roughly 34.3 million more hectares are needed to reach 30%.</p></div>
+          <figure>
           <div id="dotplot" class="chart" role="img" aria-label="Chart comparing each state's share of protected land with the 30% goal. The ACT is 25.9 points above, Tasmania 12.8 above, Western Australia 1.1 above and South Australia 0.4 above. The Northern Territory is 5.4 points below, Victoria 12.3 below, New South Wales 19.6 below and Queensland 20.6 below."></div>
           <figcaption>A point is one percentage point. The goal is for the whole country, so states are compared with it only as a yardstick. The 25% national figure for July 2026 includes new Indigenous Protected Areas.</figcaption>
         </figure>
+        </div>
       </div>
     </section>
-      <section id="conclusion" aria-labelledby="conclusion-title">
+          <section id="conclusion" aria-labelledby="conclusion-title">
       <div class="wrap">
         <h2 id="conclusion-title">What it adds up to</h2>
-        <p class="measure">National parks cover only 5.5% of Australia, a small part of the 22.6% that is protected. Protection is uneven between states and between regions, and most protected land is far from most people. Visits are mostly up where they are counted, but only three sources publish park-by-park numbers. As Australia aims for 30%, the question is not only how much land is protected, but which land.</p>
+        <div class="row single"><div class="text"><p>National parks cover only 5.5% of Australia, a small part of the 22.6% that is protected. Protection is uneven between states and between regions, and most protected land is far from most people. Visits are mostly up where they are counted, but only three sources publish park-by-park numbers. As Australia aims for 30%, the question is not only how much land is protected, but which land.</p></div></div>
       </div>
     </section>
   </main>
 
   <footer>
     <div class="wrap">
-      <p><strong>Sources:</strong> Department of Climate Change, Energy, the Environment and Water (DCCEEW), <a href="https://www.dcceew.gov.au/environment/land/nrs/science/capad/2024">Collaborative Australian Protected Areas Database (CAPAD) 2024</a>, data at 30 June 2024, licence CC BY (protected land, parks and regions); DCCEEW, <a href="https://www.dcceew.gov.au/environment/land/achieving-30-by-30">Achieving 30 by 30</a>, updated 22 July 2026 (the 30% goal); Australian Bureau of Statistics, <a href="https://www.abs.gov.au/statistics/people/population/national-state-and-territory-population">National, state and territory population</a>, March 2026 (population); NSW National Parks and Wildlife Service, park visitor survey, 2008 to 2024/25 (NSW visits); Tasmania Parks and Wildlife Service, Visitors to Selected Parks and Reserves, 2020-21 to 2025-26 (Tasmanian visits); Director of National Parks (Parks Australia), Annual Reports 2022-23 and 2024-25 (Kakadu, Uluru and other Parks Australia parks); state outlines from <a href="https://github.com/rowanhogan/australian-states">rowanhogan/australian-states</a> on GitHub (original source not stated, used only to draw the maps).</p>
+      <p><strong>Sources:</strong> Department of Climate Change, Energy, the Environment and Water (DCCEEW), <a href="https://www.dcceew.gov.au/environment/land/nrs/science/capad/2024">Collaborative Australian Protected Areas Database (CAPAD) 2024</a>, data at 30 June 2024, licence CC BY (protected land, parks and regions); DCCEEW, <a href="https://www.dcceew.gov.au/environment/land/achieving-30-by-30">Achieving 30 by 30</a>, updated 22 July 2026 (the 30% goal); Australian Bureau of Statistics, <a href="https://www.abs.gov.au/statistics/people/population/national-state-and-territory-population">National, state and territory population</a>, March 2026 (population); NSW National Parks and Wildlife Service, <a href="https://www.environment.nsw.gov.au/topics/parks-reserves-and-protected-areas/park-management/npws-park-management/park-visitor-survey">park visitor survey</a>, 2008 to 2024/25 (NSW visits); Tasmania Parks and Wildlife Service, <a href="https://parks.tas.gov.au/Documents/Visitors%20to%20Selected%20Parks%20and%20Reserves%20REFERENCE%20SITES%20-%202020-21%20to%202025-26%20financial%20year.pdf">Visitors to Selected Parks and Reserves</a>, 2020-21 to 2025-26 (Tasmanian visits); Director of National Parks (Parks Australia), <a href="https://www.dcceew.gov.au/sites/default/files/documents/dnp-annual-report-2024-25.pdf">Annual Report 2024-25</a> and Annual Report 2022-23 (Kakadu, Uluru and other Parks Australia parks); state outlines from <a href="https://github.com/rowanhogan/australian-states">rowanhogan/australian-states</a> on GitHub (original source not stated, used only to draw the maps).</p>
       <p><strong>Notes:</strong> the three visit-count sources count visitors in different ways, so their numbers are not ranked against each other. The Tasmanian site locations on the visits map are approximate. Protected land is at June 2024 and population at March 2026.</p>
       <p><strong>Author:</strong> Brandon Koh Shin | <strong>Date:</strong> 14 October 2026 | <strong>Code and data:</strong> <a href="https://github.com/Brandon15032005/Australian-national-parks">GitHub repository</a></p>
       <p><strong>AI Acknowledgment:</strong> Claude AI guided me and helped me in most parts, including the data and the code. Another AI tool also helped me find datasets.</p>
@@ -225,6 +270,7 @@
       { target: "#lollipop",   spec: "specs/bio_lollipop.json", fit: fitLollipop, shrink: shrinkWidth },
       { target: "#heatmap",    spec: "specs/bio_heatmap.json",  fit: fitHeatmap,  shrink: shrinkWidth },
       { target: "#visitsmap",  spec: "specs/visits_map.json",   fit: fitVisitsMap },
+      { target: "#visitsinset", spec: "specs/visits_inset.json", fit: fitVisitsInset },
       { target: "#nswtop",     spec: "specs/nsw_top20.json",    fit: fitNswTop,   shrink: shrinkWidth },
       { target: "#nswtrend",   spec: "specs/nsw_trend.json",    fit: fitNswTrend },
       { target: "#tasslope",   spec: "specs/tas_slope.json",    fit: fitTasSlope, shrink: shrinkWidth },
@@ -251,6 +297,7 @@
       spec.hconcat[2].width = w;
       if (narrow) {
         spec.transform[0].calculate = "datum.code";
+        spec.hconcat[2].layer = spec.hconcat[2].layer.filter(function (l) { return !l.description || l.description.indexOf("Note:") !== 0; });
         [spec.hconcat[0], spec.hconcat[2]].forEach(function (panel) {
           panel.layer.forEach(function (layer) { layer.encoding.x.scale.domain = [0, 75]; });
         });
@@ -290,24 +337,31 @@
       }
     }
 
-    // The visits map: a national map and a Sydney zoom. On phones it is shorter, has one key, and labels fewer parks.
+    // The visits map: on phones it is shorter, has one key, and the key sits in the empty south-west corner.
     function fitVisitsMap(spec, el) {
       var narrow = el.clientWidth < NARROW;
-      var main = spec.vconcat[0], inset = spec.vconcat[1];
-      main.width = Math.min(el.clientWidth - 24, 860);
-      inset.width = Math.min(el.clientWidth, 560);
+      spec.width = Math.min(el.clientWidth - 24, 860);
       if (narrow) {
-        main.height = 400; inset.height = 340;
-        main.padding = { left: 5, right: 24, top: 5, bottom: 5 };
-        inset.projection.scale = 11000; inset.projection.translate = [165, 170];
-        main.layer.forEach(function (layer) {
+        spec.height = 400;
+        spec.padding = { left: 5, right: 24, top: 5, bottom: 5 };
+        spec.layer.forEach(function (layer) {
           if (layer.description === "Places with published visit counts") {
-            layer.encoding.size.legend.orient = "bottom-left"; layer.encoding.size.legend.direction = "vertical";
+            layer.encoding.size.legend.direction = "vertical";
             layer.encoding.shape.legend = null;
           }
         });
+        spec.layer = spec.layer.filter(function (l) { return l.description !== "Note on states with no counts"; });
+      }
+    }
+
+    // The Greater Sydney zoom: smaller on phones, with only the four biggest labels.
+    function fitVisitsInset(spec, el) {
+      spec.width = Math.min(el.clientWidth, 560);
+      if (el.clientWidth < NARROW) {
+        spec.height = 340;
+        spec.projection.scale = 11000; spec.projection.translate = [165, 170];
         var keep = ["Label: Blue Mountains", "Label: Royal", "Label: Ku-ring-gai Chase", "Label: Lane Cove"];
-        inset.layer = inset.layer.filter(function (l) { return !l.description || l.description.indexOf("Label: ") !== 0 || keep.indexOf(l.description) >= 0; });
+        spec.layer = spec.layer.filter(function (l) { return !l.description || l.description.indexOf("Label: ") !== 0 || keep.indexOf(l.description) >= 0; });
       }
     }
 
@@ -327,6 +381,10 @@
       var cell = Math.max(30, Math.min(62, Math.floor((el.clientWidth - labelColumn - 24) / 6)));
       spec.vconcat[0].width = cell * 6;
       spec.vconcat[1].width = cell * 5;
+      spec.vconcat.forEach(function (panel) {
+        panel.layer.forEach(function (l) { if (l.description && l.description.indexOf("Note:") === 0) { l.mark.dx = Math.round(cell / 2) + 8; } });
+        if (narrow) { panel.layer = panel.layer.filter(function (l) { return !l.description || l.description.indexOf("Note:") !== 0; }); }
+      });
       spec.vconcat.forEach(function (panel) {
         if (narrow) {
           panel.encoding.x.axis.labelExpr = "slice(datum.value, 2, 4) + '-' + slice(datum.value, 5)";
@@ -370,7 +428,8 @@
       spec.spec.width = Math.max(150, Math.min(560, el.clientWidth - (narrow ? 150 : 240) - 24));
       if (narrow) {
         spec.spec.encoding.y.axis.labelLimit = 140; spec.spec.encoding.y.axis.labelFontSize = 12;
-        spec.spec.layer[1].encoding.x.axis.title = "Share protected (%)";
+        spec.spec.layer.forEach(function (l) { if (l.description === "Stick") { l.encoding.x.axis.title = "Share protected (%)"; } });
+        spec.spec.layer = spec.spec.layer.filter(function (l) { return !l.description || l.description.indexOf("Note:") !== 0; });
       }
     }
 
