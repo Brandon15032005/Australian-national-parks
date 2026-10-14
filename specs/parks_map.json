@@ -126,7 +126,7 @@
               30000
             ],
             "format": ",.0f",
-            "orient": "bottom-left",
+            "orient": "top-left",
             "symbolFillColor": "#0E7C7B",
             "symbolOpacity": 0.45,
             "symbolStrokeColor": "#07494B",
