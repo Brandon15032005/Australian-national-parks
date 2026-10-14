@@ -12,7 +12,7 @@
     "view": {
       "stroke": null
     },
-    "font": "Source Sans 3, Helvetica, Arial, sans-serif",
+    "font": "'Source Sans 3', Helvetica, Arial, sans-serif",
     "legend": {
       "titleFontSize": 14,
       "labelFontSize": 13,
