@@ -231,6 +231,34 @@
             "field": "lbl"
           }
         }
+      },
+      {
+        "description": "Note: under 5%",
+        "transform": [
+          {
+            "filter": "datum.name == 'Cobar Peneplain'"
+          }
+        ],
+        "mark": {
+          "fontSize": 12.5,
+          "fontStyle": "italic",
+          "color": "#51625A",
+          "lineHeight": 16,
+          "type": "text",
+          "align": "left"
+        },
+        "encoding": {
+          "x": {
+            "value": 235
+          },
+          "text": {
+            "value": [
+              "All 12 have under 5% protected.",
+              "27 of the 87 land regions",
+              "have under 10%."
+            ]
+          }
+        }
       }
     ]
   },

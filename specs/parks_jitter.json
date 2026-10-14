@@ -156,8 +156,37 @@
             "title": "Area (km²)",
             "format": ",.1f"
           }
-        ]
-      }
+        ],
+        "fillOpacity": {
+          "condition": {
+            "param": "hover_state",
+            "empty": true,
+            "value": 0.75
+          },
+          "value": 0.12
+        },
+        "strokeOpacity": {
+          "condition": {
+            "param": "hover_state",
+            "empty": true,
+            "value": 1
+          },
+          "value": 0.15
+        }
+      },
+      "params": [
+        {
+          "name": "hover_state",
+          "select": {
+            "type": "point",
+            "fields": [
+              "state"
+            ],
+            "on": "mouseover",
+            "clear": "mouseout"
+          }
+        }
+      ]
     },
     {
       "description": "Typical (median) park in each state",

@@ -305,6 +305,36 @@
               "field": "pop_label"
             }
           }
+        },
+        {
+          "description": "Note: NSW and Victoria",
+          "transform": [
+            {
+              "filter": "datum.code == 'TAS'"
+            }
+          ],
+          "mark": {
+            "fontSize": 12.5,
+            "fontStyle": "italic",
+            "color": "#51625A",
+            "lineHeight": 16,
+            "type": "text",
+            "align": "left"
+          },
+          "encoding": {
+            "x": {
+              "value": 70
+            },
+            "y": {
+              "value": 238
+            },
+            "text": {
+              "value": [
+                "NSW and Victoria: 57% of people,",
+                "but only 7% of protected land"
+              ]
+            }
+          }
         }
       ]
     }

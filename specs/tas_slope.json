@@ -70,7 +70,7 @@
       "as": "left_label"
     },
     {
-      "calculate": "format(datum.k, ',.0f') + '  ' + datum.site",
+      "calculate": "format(datum.k, ',.0f') + '  ' + datum.site + (datum.site == 'Maria Island' ? ' (2.7 times as many)' : '')",
       "as": "right_label"
     },
     {

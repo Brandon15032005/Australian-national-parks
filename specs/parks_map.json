@@ -77,6 +77,10 @@
       "transform": [
         {
           "filter": "datum.state != 'EXT'"
+        },
+        {
+          "calculate": "({'QLD':'Queensland','NSW':'New South Wales','WA':'Western Australia','VIC':'Victoria','SA':'South Australia','NT':'Northern Territory','TAS':'Tasmania','ACT':'ACT','JBT':'New South Wales'})[datum.state]",
+          "as": "state_name"
         }
       ],
       "mark": {
@@ -153,7 +157,21 @@
             "field": "type_group",
             "title": "Type"
           }
-        ]
+        ],
+        "fillOpacity": {
+          "condition": {
+            "test": "pick_state == 'All states' || datum.state_name == pick_state",
+            "value": 0.5
+          },
+          "value": 0.04
+        },
+        "strokeOpacity": {
+          "condition": {
+            "test": "pick_state == 'All states' || datum.state_name == pick_state",
+            "value": 1
+          },
+          "value": 0.1
+        }
       }
     },
     {
@@ -354,6 +372,27 @@
         "text": {
           "field": "label"
         }
+      }
+    }
+  ],
+  "params": [
+    {
+      "name": "pick_state",
+      "value": "All states",
+      "bind": {
+        "input": "select",
+        "options": [
+          "All states",
+          "Queensland",
+          "New South Wales",
+          "Western Australia",
+          "Victoria",
+          "South Australia",
+          "Northern Territory",
+          "Tasmania",
+          "ACT"
+        ],
+        "name": "Show parks in: "
       }
     }
   ]

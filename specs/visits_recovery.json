@@ -215,6 +215,28 @@
               "value": "#15271F"
             }
           }
+        },
+        {
+          "description": "Note: Maria Island",
+          "transform": [
+            {
+              "filter": "datum.site == 'Maria Island' && datum.period == '2025-26'"
+            }
+          ],
+          "mark": {
+            "fontSize": 12.5,
+            "fontStyle": "italic",
+            "color": "#51625A",
+            "lineHeight": 16,
+            "type": "text",
+            "align": "left",
+            "dx": 36
+          },
+          "encoding": {
+            "text": {
+              "value": "from 38% to 100%"
+            }
+          }
         }
       ]
     },
@@ -358,6 +380,28 @@
                 "value": "#FFFFFF"
               },
               "value": "#15271F"
+            }
+          }
+        },
+        {
+          "description": "Note: Uluru-Kata Tjuta",
+          "transform": [
+            {
+              "filter": "datum.site == 'Uluru-Kata Tjuta' && datum.period == '2024-25'"
+            }
+          ],
+          "mark": {
+            "fontSize": 12.5,
+            "fontStyle": "italic",
+            "color": "#51625A",
+            "lineHeight": 16,
+            "type": "text",
+            "align": "left",
+            "dx": 36
+          },
+          "encoding": {
+            "text": {
+              "value": "68% of its 2018-19 level"
             }
           }
         }
