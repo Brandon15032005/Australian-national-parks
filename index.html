@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Wild Country: is Australia protecting the right places?</title>
-  <meta name="description" content="A data story about Australia's protected land, national parks and who visits them.">
+  <title>Australia's National Parks: are we protecting the right places?</title>
+  <meta name="description" content="A data story about Australia's national parks and protected land: how much there is, where it is, and who lives near it.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,7 +41,7 @@
     .measure { max-width: 62ch; }   /* keeps text lines short and readable */
 
     h1, h2 { font-family: var(--serif); font-weight: 700; line-height: 1.1; margin: 0; letter-spacing: -0.01em; }
-    h1 { font-size: clamp(3.2rem, 9vw, 6rem); }
+    h1 { font-size: clamp(2.8rem, 8vw, 5.2rem); max-width: 14ch; }
     h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); }
     p { margin: 0 0 1.1rem; }
 
@@ -70,23 +70,58 @@
 <body>
   <header class="masthead">
     <div class="wrap">
-      <h1>Wild Country</h1>
-      <p class="dek">Is Australia protecting the right places, and who uses them?</p>
-      <p class="lead measure">About 22.6% of Australia's land is formally protected (June 2024). That share is not spread evenly. It changes with the state you live in, and with the kind of land you ask about.</p>
+      <h1>Australia's National Parks</h1>
+      <p class="dek">Are we protecting the right places, and who uses them?</p>
+      <p class="lead measure">Australia protects more than a fifth of its land. This page looks at how much of that is national park, where it is, and who lives near it.</p>
     </div>
   </header>
 
   <main>
+    <section id="how-much" aria-labelledby="how-much-title">
+      <div class="wrap">
+        <h2 id="how-much-title">National parks are only part of the protected land</h2>
+        <p class="measure">About 22.6% of Australia's land is protected (June 2024). Only about a quarter of that is national park, which is 5.5% of the whole country. Indigenous Protected Areas, where Aboriginal and Torres Strait Islander people manage their own land for conservation, cover twice as much (11.2%).</p>
+        <figure>
+          <div id="waffle" class="chart" role="img" aria-label="Grid of 200 squares, each one half a percent of Australia's land. 5.5% is national park, 11.2% is Indigenous Protected Area, 5.9% is other protected land and 77.4% is not protected."></div>
+          <figcaption>Each square is 0.5% of Australia's land. National parks include state, Commonwealth, Aboriginal-owned and scientific national parks. Other protected areas include nature reserves, conservation parks and private conservation areas.</figcaption>
+          <p class="source">Source: Department of Climate Change, Energy, the Environment and Water, Collaborative Australian Protected Areas Database (CAPAD) 2024, protected areas by type, at 30 June 2024.</p>
+        </figure>
+      </div>
+    </section>
+
     <section id="states" aria-labelledby="states-title">
       <div class="wrap">
         <h2 id="states-title">Not every state protects the same share</h2>
         <p class="measure">Tasmania protects 43% of its land and the ACT 56%. New South Wales and Queensland protect less than 11% each. Western Australia and South Australia are the only large states already past 30%, the national goal for 2030. That goal applies to the whole country, so here it is only a yardstick.</p>
-
         <figure>
           <div id="choropleth" class="chart" role="img" aria-label="Map of Australia showing the share of each state's land that is protected, from 9% in Queensland to 56% in the ACT."></div>
           <noscript><p class="chart-error">This chart needs JavaScript to display.</p></noscript>
           <figcaption>Share of each state's land that is protected, at 30 June 2024. Protected land includes national parks, Indigenous Protected Areas, nature reserves and other formally protected areas.</figcaption>
           <p class="source">Source: Department of Climate Change, Energy, the Environment and Water, Collaborative Australian Protected Areas Database (CAPAD) 2024. State outlines: GitHub, rowanhogan/australian-states.</p>
+        </figure>
+      </div>
+    </section>
+
+    <section id="people" aria-labelledby="people-title">
+      <div class="wrap">
+        <h2 id="people-title">Most protected land is far from most people</h2>
+        <p class="measure">New South Wales and Victoria are home to 57% of Australians but hold only 7% of the country's protected land. Western Australia, the Northern Territory and South Australia hold 82% of it and are home to 19% of the people.</p>
+        <figure>
+          <div id="butterfly" class="chart" role="img" aria-label="Two bar charts side by side. On the left, each state's share of Australia's protected land: Western Australia 45%, Northern Territory 19%, South Australia 17%, Queensland 9%, New South Wales 5%, Victoria 2%, Tasmania 2%. On the right, each state's share of the population: New South Wales 31%, Victoria 26%, Queensland 21%, Western Australia 11%."></div>
+          <figcaption>Each state's share of Australia's protected land (teal) and of its population (purple). The shares for protected land add up to slightly less than 100% because Jervis Bay and the external territories are left out.</figcaption>
+          <p class="source">Sources: CAPAD 2024 (protected land, June 2024); Australian Bureau of Statistics, National, state and territory population, March 2026 (released 17 September 2026).</p>
+        </figure>
+      </div>
+    </section>
+
+    <section id="thirty" aria-labelledby="thirty-title">
+      <div class="wrap">
+        <h2 id="thirty-title">The road to 30%</h2>
+        <p class="measure">Four places are already past 30%: the ACT, Tasmania, Western Australia and South Australia. Queensland and New South Wales are about 20 points short. Across the whole country, about 25% was protected by July 2026, and roughly 34.3 million more hectares are needed to reach 30%.</p>
+        <figure>
+          <div id="dotplot" class="chart" role="img" aria-label="Chart comparing each state's share of protected land with the 30% goal. The ACT is 25.9 points above, Tasmania 12.8 above, Western Australia 1.1 above and South Australia 0.4 above. The Northern Territory is 5.4 points below, Victoria 12.3 below, New South Wales 19.6 below and Queensland 20.6 below."></div>
+          <figcaption>Each state's share of land protected (June 2024) against the 30% goal. A point is one percentage point. The goal is for the whole country, so states are compared with it only as a yardstick. The national figure for July 2026 includes new Indigenous Protected Areas that are not yet in the state figures.</figcaption>
+          <p class="source">Sources: CAPAD 2024 (state shares, June 2024); Department of Climate Change, Energy, the Environment and Water, Achieving 30 by 30 (updated 22 July 2026).</p>
         </figure>
       </div>
     </section>
@@ -105,9 +140,54 @@
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.23.0"></script>
   <script>
     // Each chart is one Vega-Lite JSON file in the specs/ folder.
+    // "fit" lets a chart adapt its size to the screen before it is drawn.
     const charts = [
-      { target: "#choropleth", spec: "specs/choropleth.json" }
+      { target: "#waffle",     spec: "specs/waffle.json",     fit: fitWaffle },
+      { target: "#choropleth", spec: "specs/choropleth.json" },
+      { target: "#butterfly",  spec: "specs/butterfly.json",  fit: fitButterfly },
+      { target: "#dotplot",    spec: "specs/dotplot.json",    fit: fitDotplot, shrink: shrinkDotplot }
     ];
+
+    // The waffle squares stay square: pick a square size that fits 20 columns on this screen.
+    function fitWaffle(spec, el) {
+      var step = Math.max(12, Math.min(30, Math.floor((el.clientWidth - 8) / 20)));
+      spec.width = { step: step };
+      spec.height = { step: step };
+    }
+
+    // The butterfly has three panels: bars, state names, bars. On small screens the panels shrink and use state codes.
+    function fitButterfly(spec, el) {
+      var narrow = el.clientWidth < 560;
+      var labelColumn = narrow ? 50 : 170;
+      var w = Math.max(90, Math.min(340, Math.floor((el.clientWidth - labelColumn - 30) / 2)));
+      spec.hconcat[0].width = w;
+      spec.hconcat[1].width = labelColumn;
+      spec.hconcat[2].width = w;
+      if (narrow) {
+        spec.transform[0].calculate = "datum.code";
+        [spec.hconcat[0], spec.hconcat[2]].forEach(function (panel) {
+          panel.layer.forEach(function (layer) { layer.encoding.x.scale.domain = [0, 75]; });
+        });
+      }
+    }
+
+    // The dot plot leaves room on the left for state names, and uses short codes and labels on small screens.
+    function fitDotplot(spec, el) {
+      var narrow = el.clientWidth < 560;
+      var labelColumn = narrow ? 50 : 160;
+      spec.width = Math.max(180, Math.min(780, el.clientWidth - labelColumn - 24));
+      if (narrow) {
+        spec.transform[0].calculate = "datum.code";
+        spec.encoding.y.sort = ["ACT", "TAS", "WA", "SA", "NT", "VIC", "NSW", "QLD"];
+        spec.layer.forEach(function (layer) {
+          if (layer.description && layer.description.indexOf("Gap label") === 0) { layer.encoding.text.field = "gap_short"; }
+          if (layer.description && layer.description.indexOf("Dots") === 0) { layer.encoding.fill.legend.direction = "vertical"; }
+        });
+      }
+    }
+
+    // If the drawn chart is wider than its box (text can be wider than the browser predicted), narrow it to fit.
+    function shrinkDotplot(spec, overflow) { spec.width = Math.max(150, spec.width - overflow - 2); }
 
     function showError(target, err) {
       console.error("Chart failed:", target, err);
@@ -115,11 +195,37 @@
         '<p class="chart-error">This chart could not be loaded. (' + String(err.message || err) + ')</p>';
     }
 
+    function draw(c, attempt) {
+      var el = document.querySelector(c.target);
+      c.lastWidth = el.clientWidth;
+      return fetch(c.spec)
+        .then(function (r) { if (!r.ok) { throw new Error(c.spec + " not found"); } return r.json(); })
+        .then(function (spec) {
+          if (c.fit) { c.fit(spec, el); }
+          if (c.widthAdjust) { spec.width = Math.max(150, spec.width - c.widthAdjust); }
+          return vegaEmbed(c.target, spec, { actions: false, renderer: "svg" }).then(function () {
+            var svg = el.querySelector("svg");
+            var overflow = svg ? Math.ceil(svg.getBoundingClientRect().width - el.clientWidth) : 0;
+            if (c.shrink && overflow > 0 && !attempt) { c.widthAdjust = (c.widthAdjust || 0) + overflow + 2; return draw(c, true); }
+          });
+        })
+        .catch(function (e) { showError(c.target, e); });
+    }
+
     // Wait for the web fonts so the chart text is measured correctly.
     (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function () {
-      charts.forEach(function (c) {
-        vegaEmbed(c.target, c.spec, { actions: false, renderer: "svg" }).catch(function (e) { showError(c.target, e); });
-      });
+      charts.forEach(function (c) { draw(c); });
+    });
+
+    // Redraw the screen-sized charts if the window width really changes (for example, turning a phone).
+    var resizeTimer;
+    window.addEventListener("resize", function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        charts.forEach(function (c) {
+          if (c.fit && Math.abs(document.querySelector(c.target).clientWidth - c.lastWidth) > 24) { c.widthAdjust = 0; draw(c); }
+        });
+      }, 250);
     });
   </script>
 </body>
