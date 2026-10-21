@@ -91,7 +91,7 @@
           "as": "v"
         },
         {
-          "calculate": "({'NSW':'NSW National Parks and Wildlife Service (survey estimates)','TAS':'Tasmania Parks and Wildlife Service (site counts)','Commonwealth':'Parks Australia (tickets and gate counts)'})[datum.jurisdiction]",
+          "calculate": "({'NSW':'New South Wales (survey estimates)','TAS':'Tasmania (site counts)','Commonwealth':'Parks Australia (tickets and gate counts)'})[datum.jurisdiction]",
           "as": "agency"
         },
         {
@@ -136,8 +136,8 @@
           "type": "nominal",
           "scale": {
             "domain": [
-              "NSW National Parks and Wildlife Service (survey estimates)",
-              "Tasmania Parks and Wildlife Service (site counts)",
+              "New South Wales (survey estimates)",
+              "Tasmania (site counts)",
               "Parks Australia (tickets and gate counts)"
             ],
             "range": [

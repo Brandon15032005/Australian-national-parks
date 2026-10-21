@@ -1,0 +1,389 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Zoom on Tasmania for the visits map: the 14 Tasmanian reference sites (2025-26), sized by visits. Site locations are approximate.",
+  "background": "transparent",
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "font": "'Source Sans 3', Helvetica, Arial, sans-serif",
+    "axis": {
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "titleFontWeight": 600,
+      "labelColor": "#15271F",
+      "titleColor": "#51625A",
+      "gridColor": "#D3DDD8",
+      "domainColor": "#9AA8A1",
+      "tickColor": "#9AA8A1"
+    },
+    "legend": {
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "titleFontWeight": 600,
+      "labelColor": "#15271F"
+    },
+    "title": {
+      "fontSize": 15,
+      "fontWeight": 700,
+      "color": "#15271F",
+      "font": "'Source Sans 3', Helvetica, Arial, sans-serif"
+    }
+  },
+  "width": 430,
+  "height": 430,
+  "title": {
+    "text": "Zoom: Tasmania",
+    "anchor": "start",
+    "offset": 10,
+    "fontSize": 15,
+    "fontWeight": 700,
+    "color": "#15271F"
+  },
+  "projection": {
+    "type": "mercator",
+    "scale": 6000,
+    "center": [
+      146.5,
+      -42.2
+    ],
+    "translate": [
+      215,
+      215
+    ]
+  },
+  "layer": [
+    {
+      "description": "Tasmania outline",
+      "data": {
+        "url": "data/australia_states.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "transform": [
+        {
+          "filter": "datum.properties.STATE_NAME == 'Tasmania'"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "fill": "#E6ECE8",
+        "stroke": "#FFFFFF",
+        "strokeWidth": 1.2
+      }
+    },
+    {
+      "description": "Tasmanian sites",
+      "data": {
+        "url": "data/visits.csv"
+      },
+      "transform": [
+        {
+          "filter": "datum.jurisdiction == 'TAS' && datum.period == '2025-26' && isValid(datum.lat) && datum.lat !== ''"
+        },
+        {
+          "calculate": "toNumber(datum.visits)",
+          "as": "v"
+        }
+      ],
+      "mark": {
+        "type": "point",
+        "shape": "square",
+        "filled": true,
+        "fillOpacity": 0.7,
+        "stroke": "#8A3F05",
+        "strokeWidth": 1,
+        "color": "#E07A1F"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "size": {
+          "field": "v",
+          "type": "quantitative",
+          "scale": {
+            "type": "sqrt",
+            "domain": [
+              0,
+              8000000
+            ],
+            "range": [
+              15,
+              2400
+            ]
+          },
+          "legend": null
+        },
+        "order": {
+          "field": "v",
+          "type": "quantitative",
+          "sort": "descending"
+        },
+        "tooltip": [
+          {
+            "field": "place",
+            "title": "Site"
+          },
+          {
+            "field": "period",
+            "title": "Year"
+          },
+          {
+            "field": "v",
+            "type": "quantitative",
+            "title": "Visits",
+            "format": ",.0f"
+          }
+        ]
+      }
+    },
+    {
+      "description": "Label: Freycinet",
+      "data": {
+        "values": [
+          {
+            "key": "Freycinet",
+            "label": "Freycinet"
+          }
+        ]
+      },
+      "transform": [
+        {
+          "lookup": "key",
+          "from": {
+            "data": {
+              "url": "data/visits.csv"
+            },
+            "key": "place",
+            "fields": [
+              "lat",
+              "lon"
+            ]
+          }
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 12.5,
+        "fontWeight": 700,
+        "color": "#15271F",
+        "dx": -22,
+        "dy": 0,
+        "align": "right"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    },
+    {
+      "description": "Label: Cradle Mountain",
+      "data": {
+        "values": [
+          {
+            "key": "Cradle Mountain (Dove Lake)",
+            "label": "Cradle Mountain"
+          }
+        ]
+      },
+      "transform": [
+        {
+          "lookup": "key",
+          "from": {
+            "data": {
+              "url": "data/visits.csv"
+            },
+            "key": "place",
+            "fields": [
+              "lat",
+              "lon"
+            ]
+          }
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 12.5,
+        "fontWeight": 700,
+        "color": "#15271F",
+        "dx": -20,
+        "dy": 0,
+        "align": "right"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    },
+    {
+      "description": "Label: Mount Field",
+      "data": {
+        "values": [
+          {
+            "key": "Mount Field",
+            "label": "Mount Field"
+          }
+        ]
+      },
+      "transform": [
+        {
+          "lookup": "key",
+          "from": {
+            "data": {
+              "url": "data/visits.csv"
+            },
+            "key": "place",
+            "fields": [
+              "lat",
+              "lon"
+            ]
+          }
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 12.5,
+        "fontWeight": 700,
+        "color": "#15271F",
+        "dx": -20,
+        "dy": 0,
+        "align": "right"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    },
+    {
+      "description": "Label: Tasmans Arch",
+      "data": {
+        "values": [
+          {
+            "key": "Tasmans Arch (Tasman National Park)",
+            "label": "Tasmans Arch"
+          }
+        ]
+      },
+      "transform": [
+        {
+          "lookup": "key",
+          "from": {
+            "data": {
+              "url": "data/visits.csv"
+            },
+            "key": "place",
+            "fields": [
+              "lat",
+              "lon"
+            ]
+          }
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 12.5,
+        "fontWeight": 700,
+        "color": "#15271F",
+        "dx": -20,
+        "dy": 4,
+        "align": "right"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    },
+    {
+      "description": "Label: Maria Island",
+      "data": {
+        "values": [
+          {
+            "key": "Maria Island",
+            "label": "Maria Island"
+          }
+        ]
+      },
+      "transform": [
+        {
+          "lookup": "key",
+          "from": {
+            "data": {
+              "url": "data/visits.csv"
+            },
+            "key": "place",
+            "fields": [
+              "lat",
+              "lon"
+            ]
+          }
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 12.5,
+        "fontWeight": 700,
+        "color": "#15271F",
+        "dx": -16,
+        "dy": 16,
+        "align": "right"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    }
+  ]
+}

@@ -82,7 +82,7 @@
           "as": "v"
         },
         {
-          "calculate": "({'NSW':'NSW National Parks and Wildlife Service (survey estimates)','TAS':'Tasmania Parks and Wildlife Service (site counts)','Commonwealth':'Parks Australia (tickets and gate counts)'})[datum.jurisdiction]",
+          "calculate": "({'NSW':'New South Wales (survey estimates)','TAS':'Tasmania (site counts)','Commonwealth':'Parks Australia (tickets and gate counts)'})[datum.jurisdiction]",
           "as": "agency"
         }
       ],
@@ -128,11 +128,12 @@
               5000000
             ],
             "format": ",.0f",
-            "orient": "bottom-left",
+            "orient": "bottom",
             "symbolFillColor": "#E07A1F",
             "symbolOpacity": 0.55,
             "symbolStrokeColor": "#8A3F05",
-            "titleLimit": 200
+            "titleLimit": 200,
+            "direction": "vertical"
           }
         },
         "shape": {
@@ -140,8 +141,8 @@
           "type": "nominal",
           "scale": {
             "domain": [
-              "NSW National Parks and Wildlife Service (survey estimates)",
-              "Tasmania Parks and Wildlife Service (site counts)",
+              "New South Wales (survey estimates)",
+              "Tasmania (site counts)",
               "Parks Australia (tickets and gate counts)"
             ],
             "range": [
@@ -155,13 +156,14 @@
               "Who counted",
               "(methods differ)"
             ],
-            "orient": "bottom-left",
+            "orient": "bottom",
             "symbolFillColor": "#E07A1F",
             "symbolOpacity": 0.55,
             "symbolStrokeColor": "#8A3F05",
-            "labelLimit": 380,
+            "labelLimit": 300,
             "titleLimit": 300,
-            "symbolSize": 220
+            "symbolSize": 220,
+            "direction": "vertical"
           }
         },
         "order": {
@@ -241,6 +243,59 @@
                     [
                       150.25,
                       -34.4
+                    ]
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        "format": {
+          "property": "features"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": null,
+        "stroke": "#15271F",
+        "strokeWidth": 1.4,
+        "strokeDash": [
+          5,
+          3
+        ]
+      }
+    },
+    {
+      "description": "Frame showing the Tasmania zoom",
+      "data": {
+        "values": {
+          "type": "FeatureCollection",
+          "features": [
+            {
+              "type": "Feature",
+              "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                  [
+                    [
+                      144.4,
+                      -43.8
+                    ],
+                    [
+                      144.4,
+                      -40.6
+                    ],
+                    [
+                      148.6,
+                      -40.6
+                    ],
+                    [
+                      148.6,
+                      -43.8
+                    ],
+                    [
+                      144.4,
+                      -43.8
                     ]
                   ]
                 ]
