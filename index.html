@@ -188,7 +188,8 @@
           <figure>
           <div id="visitsmap" class="chart" role="img" aria-label="Map of the places with published visit counts. Large circles for New South Wales parks cluster around Sydney, small squares mark Tasmanian sites, and two diamonds mark Kakadu and Uluru. A second map zooms in on Greater Sydney, where Royal, Ku-ring-gai Chase and Blue Mountains have the most visits."></div>
           <div id="visitsinset" class="chart" role="img" aria-label="Zoom map of Greater Sydney showing the busiest NSW parks: Blue Mountains, Royal, Ku-ring-gai Chase, Lane Cove, Sydney Harbour, Brisbane Water and Kamay Botany Bay."></div>
-          <figcaption>Circles are New South Wales, squares are Tasmania and diamonds are Parks Australia, because each agency counts in its own way. Compare sizes only within a shape. Click a shape in the key to focus on one agency. Tasmanian site locations are approximate, and the island parks are not shown.</figcaption>
+          <div id="visitstas" class="chart" role="img" aria-label="Zoom map of Tasmania showing the 14 reference sites as squares sized by visits. Freycinet, Cradle Mountain, Mount Field, Tasmans Arch and Maria Island are labelled."></div>
+          <figcaption>Circles are New South Wales, squares are Tasmania and diamonds are Parks Australia, because each agency counts in its own way. Compare sizes only within a shape. Click a shape in the key to focus on one agency. Two zoom maps open up Greater Sydney and Tasmania, where symbols overlap. Tasmanian site locations are approximate, and the island parks are not shown.</figcaption>
         </figure>
         </div>
         <div class="row">
@@ -260,7 +261,7 @@
     // "shrink" lets a chart narrow itself if the browser draws it wider than its box.
     const charts = [
       { target: "#waffle",     spec: "specs/waffle.json",       fit: fitWaffle },
-      { target: "#choropleth", spec: "specs/choropleth.json" },
+      { target: "#choropleth", spec: "specs/choropleth.json",     fit: fitChoropleth },
       { target: "#butterfly",  spec: "specs/butterfly.json",    fit: fitButterfly },
       { target: "#tilegrid",   spec: "specs/tilegrid.json",     fit: fitTilegrid },
       { target: "#parksmap",   spec: "specs/parks_map.json",    fit: fitParksMap },
@@ -269,6 +270,7 @@
       { target: "#heatmap",    spec: "specs/bio_heatmap.json",  fit: fitHeatmap,  shrink: shrinkWidth },
       { target: "#visitsmap",  spec: "specs/visits_map.json",   fit: fitVisitsMap },
       { target: "#visitsinset", spec: "specs/visits_inset.json", fit: fitVisitsInset },
+      { target: "#visitstas", spec: "specs/visits_inset_tas.json", fit: fitVisitsTas },
       { target: "#nswtop",     spec: "specs/nsw_top20.json",    fit: fitNswTop,   shrink: shrinkWidth },
       { target: "#nswtrend",   spec: "specs/nsw_trend.json",    fit: fitNswTrend },
       { target: "#tasslope",   spec: "specs/tas_slope.json",    fit: fitTasSlope, shrink: shrinkWidth },
@@ -335,7 +337,26 @@
       }
     }
 
-    // The visits map: on phones it is shorter, has one key, and the key sits in the empty south-west corner.
+    // The state map: on wider screens the key sits below the map, so it never touches the coastline.
+    function fitChoropleth(spec, el) {
+      if (el.clientWidth >= NARROW) {
+        var legend = spec.layer[0].encoding.color.legend;
+        legend.orient = "bottom"; legend.direction = "horizontal"; legend.columns = 3; legend.offset = 10;
+      }
+    }
+
+    // The Tasmania zoom: same idea as the Sydney zoom, smaller on phones and with fewer labels.
+    function fitVisitsTas(spec, el) {
+      spec.width = Math.min(el.clientWidth, 430);
+      if (el.clientWidth < NARROW) {
+        spec.height = 380;
+        spec.projection.scale = 4800; spec.projection.translate = [Math.round(spec.width / 2), 190];
+        var keep = ["Label: Freycinet", "Label: Cradle Mountain", "Label: Maria Island"];
+        spec.layer = spec.layer.filter(function (l) { return !l.description || l.description.indexOf("Label: ") !== 0 || keep.indexOf(l.description) >= 0; });
+      }
+    }
+
+    // The visits map: the keys sit below the map; on phones it is shorter and has one key.
     function fitVisitsMap(spec, el) {
       var narrow = el.clientWidth < NARROW;
       spec.width = Math.min(el.clientWidth - 24, 860);

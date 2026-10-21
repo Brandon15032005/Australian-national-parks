@@ -25,6 +25,7 @@ Author: Brandon Koh Shin.
 | `bio_heatmap.json` | Heatmap of how strictly each of those regions is protected |
 | `visits_map.json` | Map of places with published visit counts (click the key to focus on one agency) |
 | `visits_inset.json` | Zoom on Greater Sydney for the visits map |
+| `visits_inset_tas.json` | Zoom on Tasmania for the visits map |
 | `nsw_top20.json` | Lollipop chart of the 20 most visited NSW parks |
 | `nsw_trend.json` | Line chart of total NSW park visits, 2008 to 2024/25 |
 | `tas_slope.json` | Slope chart of visits at 12 Tasmanian sites |
