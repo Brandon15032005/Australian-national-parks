@@ -20,6 +20,7 @@ Author: Brandon Koh Shin.
 | `butterfly.json` | Butterfly chart: share of protected land against share of population |
 | `tilegrid.json` | Tile grid map: people for every square kilometre of protected land |
 | `parks_map.json` | Map of every national park, sized by area (state selector) |
+| `parks_bins.json` | Binned map: how many national parks fall in each 200 km square |
 | `parks_jitter.json` | Jitter plot of park sizes by state (hover to highlight a state) |
 | `bio_lollipop.json` | Lollipop chart of the least and most protected natural regions |
 | `bio_heatmap.json` | Heatmap of how strictly each of those regions is protected |
