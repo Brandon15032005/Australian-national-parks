@@ -1,0 +1,408 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Binned map: how many national parks have their centre inside each 2-degree square (about 200 km across). Darker squares hold more parks.",
+  "background": "transparent",
+  "width": "container",
+  "height": 520,
+  "autosize": {
+    "type": "fit",
+    "contains": "padding"
+  },
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "font": "'Source Sans 3', Helvetica, Arial, sans-serif",
+    "axis": {
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "titleFontWeight": 600,
+      "labelColor": "#15271F",
+      "titleColor": "#51625A",
+      "gridColor": "#D3DDD8",
+      "domainColor": "#9AA8A1",
+      "tickColor": "#9AA8A1"
+    },
+    "legend": {
+      "labelFontSize": 13,
+      "titleFontSize": 13,
+      "titleFontWeight": 600,
+      "labelColor": "#15271F"
+    },
+    "title": {
+      "fontSize": 15,
+      "fontWeight": 700,
+      "color": "#15271F",
+      "font": "'Source Sans 3', Helvetica, Arial, sans-serif"
+    }
+  },
+  "projection": {
+    "type": "albers",
+    "parallels": [
+      -18,
+      -36
+    ],
+    "rotate": [
+      -132,
+      0,
+      0
+    ],
+    "center": [
+      0,
+      -27
+    ]
+  },
+  "layer": [
+    {
+      "description": "State outlines for context",
+      "data": {
+        "url": "data/australia_states.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#E6ECE8",
+        "stroke": "#FFFFFF",
+        "strokeWidth": 1.2
+      }
+    },
+    {
+      "description": "Squares coloured by the number of parks",
+      "data": {
+        "url": "data/parks.csv"
+      },
+      "transform": [
+        {
+          "filter": "datum.state != 'EXT'"
+        },
+        {
+          "calculate": "floor(datum.lon / 2) * 2",
+          "as": "lon0"
+        },
+        {
+          "calculate": "floor(datum.lat / 2) * 2",
+          "as": "lat0"
+        },
+        {
+          "aggregate": [
+            {
+              "op": "count",
+              "as": "parks"
+            }
+          ],
+          "groupby": [
+            "lon0",
+            "lat0"
+          ]
+        },
+        {
+          "calculate": "datum.lon0 + 2",
+          "as": "lon1"
+        },
+        {
+          "calculate": "datum.lat0 + 2",
+          "as": "lat1"
+        }
+      ],
+      "mark": {
+        "type": "rect",
+        "stroke": "#FFFFFF",
+        "strokeWidth": 0.8,
+        "fillOpacity": 0.95
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon0",
+          "type": "quantitative"
+        },
+        "longitude2": {
+          "field": "lon1"
+        },
+        "latitude": {
+          "field": "lat0",
+          "type": "quantitative"
+        },
+        "latitude2": {
+          "field": "lat1"
+        },
+        "color": {
+          "field": "parks",
+          "type": "quantitative",
+          "scale": {
+            "type": "sqrt",
+            "domain": [
+              1,
+              49
+            ],
+            "range": [
+              "#BFE0DB",
+              "#07494B"
+            ],
+            "clamp": true
+          },
+          "legend": {
+            "title": "National parks in each square",
+            "orient": "bottom",
+            "direction": "horizontal",
+            "gradientLength": 260,
+            "values": [
+              1,
+              5,
+              10,
+              20,
+              30,
+              49
+            ],
+            "titleLimit": 360
+          }
+        },
+        "tooltip": [
+          {
+            "field": "parks",
+            "type": "quantitative",
+            "title": "National parks in this square"
+          }
+        ]
+      }
+    },
+    {
+      "description": "Halo behind Note: busiest square",
+      "data": {
+        "url": "data/parks.csv"
+      },
+      "transform": [
+        {
+          "filter": "datum.state != 'EXT'"
+        },
+        {
+          "calculate": "floor(datum.lon / 2) * 2",
+          "as": "lon0"
+        },
+        {
+          "calculate": "floor(datum.lat / 2) * 2",
+          "as": "lat0"
+        },
+        {
+          "aggregate": [
+            {
+              "op": "count",
+              "as": "parks"
+            }
+          ],
+          "groupby": [
+            "lon0",
+            "lat0"
+          ]
+        },
+        {
+          "joinaggregate": [
+            {
+              "op": "max",
+              "field": "parks",
+              "as": "most"
+            }
+          ]
+        },
+        {
+          "filter": "datum.parks == datum.most"
+        },
+        {
+          "calculate": "['Busiest square:', datum.parks + ' parks']",
+          "as": "label"
+        },
+        {
+          "calculate": "datum.lon0 + 1",
+          "as": "clon"
+        },
+        {
+          "calculate": "datum.lat0 + 1",
+          "as": "clat"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 13,
+        "fontWeight": 700,
+        "color": "#F4F7F5",
+        "align": "right",
+        "dx": -34,
+        "dy": 0,
+        "lineHeight": 16,
+        "stroke": "#F4F7F5",
+        "strokeWidth": 4
+      },
+      "encoding": {
+        "longitude": {
+          "field": "clon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "clat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    },
+    {
+      "description": "Note: busiest square",
+      "data": {
+        "url": "data/parks.csv"
+      },
+      "transform": [
+        {
+          "filter": "datum.state != 'EXT'"
+        },
+        {
+          "calculate": "floor(datum.lon / 2) * 2",
+          "as": "lon0"
+        },
+        {
+          "calculate": "floor(datum.lat / 2) * 2",
+          "as": "lat0"
+        },
+        {
+          "aggregate": [
+            {
+              "op": "count",
+              "as": "parks"
+            }
+          ],
+          "groupby": [
+            "lon0",
+            "lat0"
+          ]
+        },
+        {
+          "joinaggregate": [
+            {
+              "op": "max",
+              "field": "parks",
+              "as": "most"
+            }
+          ]
+        },
+        {
+          "filter": "datum.parks == datum.most"
+        },
+        {
+          "calculate": "['Busiest square:', datum.parks + ' parks']",
+          "as": "label"
+        },
+        {
+          "calculate": "datum.lon0 + 1",
+          "as": "clon"
+        },
+        {
+          "calculate": "datum.lat0 + 1",
+          "as": "clat"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 13,
+        "fontWeight": 700,
+        "color": "#15271F",
+        "align": "right",
+        "dx": -34,
+        "dy": 0,
+        "lineHeight": 16
+      },
+      "encoding": {
+        "longitude": {
+          "field": "clon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "clat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    },
+    {
+      "description": "Halo behind Note: south-west corner",
+      "data": {
+        "values": [
+          {
+            "lon": 116.9,
+            "lat": -35.0,
+            "label": [
+              "South-west",
+              "Western Australia"
+            ]
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 13,
+        "fontWeight": 700,
+        "color": "#F4F7F5",
+        "align": "right",
+        "dx": -34,
+        "dy": 0,
+        "lineHeight": 16,
+        "stroke": "#F4F7F5",
+        "strokeWidth": 4
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    },
+    {
+      "description": "Note: south-west corner",
+      "data": {
+        "values": [
+          {
+            "lon": 116.9,
+            "lat": -35.0,
+            "label": [
+              "South-west",
+              "Western Australia"
+            ]
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 13,
+        "fontWeight": 700,
+        "color": "#15271F",
+        "align": "right",
+        "dx": -34,
+        "dy": 0,
+        "lineHeight": 16
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    }
+  ]
+}
